@@ -1,0 +1,72 @@
+name: Build ReplitKit IPA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Build (no signing)
+        run: |
+          xcodebuild \
+            -project ReplitKit.xcodeproj \
+            -scheme ReplitKit \
+            -configuration Release \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_ALLOWED=NO \
+            ONLY_ACTIVE_ARCH=NO \
+            build \
+            | xcpretty || true
+          
+          # Also try the real device build for IPA
+          xcodebuild \
+            -project ReplitKit.xcodeproj \
+            -scheme ReplitKit \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            ONLY_ACTIVE_ARCH=NO \
+            build \
+            CONFIGURATION_BUILD_DIR=$PWD/build/Release-iphoneos \
+            | xcpretty || true
+
+      - name: Package IPA
+        run: |
+          set -e
+          APP_PATH=$(find build/Release-iphoneos -name "*.app" | head -1)
+          if [ -z "$APP_PATH" ]; then
+            echo "No .app found, checking DerivedData..."
+            APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "*.app" -path "*/Release-iphoneos/*" | head -1)
+          fi
+          echo "App: $APP_PATH"
+          mkdir -p Payload
+          cp -r "$APP_PATH" Payload/
+          zip -r ReplitKit.ipa Payload/
+          ls -lh ReplitKit.ipa
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: ReplitKit-IPA
+          path: ReplitKit.ipa
+          retention-days: 14
