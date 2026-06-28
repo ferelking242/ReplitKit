@@ -10,6 +10,7 @@
 		A001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F001 /* AppDelegate.swift */; };
 		A002 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F002 /* BrowserViewController.swift */; };
 		A003 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F003 /* Logger.swift */; };
+		A004 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F005 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,6 +18,7 @@
 		F002 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		F003 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		F004 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F005 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		PROD /* ReplitKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReplitKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -36,6 +38,7 @@
 				F001 /* AppDelegate.swift */,
 				F002 /* BrowserViewController.swift */,
 				F003 /* Logger.swift */,
+				F005 /* LoginViewController.swift */,
 			);
 			name = Sources;
 			path = ReplitKit/Sources;
@@ -105,6 +108,7 @@
 				A001 /* AppDelegate.swift in Sources */,
 				A002 /* BrowserViewController.swift in Sources */,
 				A003 /* Logger.swift in Sources */,
+				A004 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
